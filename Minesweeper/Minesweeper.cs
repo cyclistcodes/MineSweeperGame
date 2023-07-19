@@ -130,3 +130,20 @@ static void openTile(Tile[,] gameBoard, int x, int y)
         }
     }
 }
+
+static int countBombsAroundTile(Tile[,] gameBoard, int x, int y)
+{
+    int bombCount = 0;
+    int[] dx = { -1, -1, -1, 0, 0, 1, 1, 1 };
+    int[] dy = { -1, 0, 1, -1, 1, -1, 0, 1 };
+    for (int i = 0; i < 8; i++)
+    {
+        int new_x = x + dx[i];
+        int new_y = y + dy[i];
+        if (new_x >= 0 && new_x < 5 && new_y >= 0 && new_y < 5 && gameBoard[new_x, new_y].hasBomb)
+        {
+            bombCount++;
+        }
+    }
+    return bombCount;
+}
