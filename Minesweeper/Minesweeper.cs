@@ -73,14 +73,6 @@ class Minesweeper
         }
     }
 
-    static void Main(string[] args)
-    {
-        Tile[,] gameBoard = createGameBoard();
-        placeRandomBombs(gameBoard, 5); 
-        displayGameBoard(gameBoard); 
-    }
-}
-
 static bool isGameWon(Tile[,] gameBoard)
 {
     for (int x = 0; x < 5; x++)
@@ -178,4 +170,51 @@ static void printBombCoordinates(Tile[,] gameBoard)
         }
     }
     Console.WriteLine();
+}
+
+static void Main(string[] args)
+{
+    Tile[,] gameBoard = createGameBoard();
+
+    gameBoard[0, 0].hasBomb = true;
+    gameBoard[0, 1].hasBomb = true;
+    gameBoard[1, 1].hasBomb = true;
+    gameBoard[1, 4].hasBomb = true;
+    gameBoard[4, 2].hasBomb = true;
+
+    printBombCoordinates(gameBoard);
+
+    while (true)
+    {
+        displayGameBoard(gameBoard);
+        Console.Write("Enter coordinates (x y): ");
+        string input = Console.ReadLine();
+        string[] coordinates = input.Split(' ');
+
+        if (coordinates.Length == 2 && int.TryParse(coordinates[0], out int x) && int.TryParse(coordinates[1], out int y))
+        {
+            if (x >= 0 && x < 5 && y >= 0 && y < 5)
+            {
+                openTile(gameBoard, x, y);
+
+                if (areAllTilesOpened(gameBoard))
+                {
+                    displayGameBoard(gameBoard);
+
+                    Console.WriteLine("Congratulations! You won!");
+                    Console.ReadLine();
+                    break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid coordinates. Try again.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Invalid input. Please enter two integers separated by a space.");
+        }
+    }
+}
 }
