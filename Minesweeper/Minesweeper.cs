@@ -46,11 +46,28 @@ class Minesweeper
 
     static void DisplayGameBoard(Tile[,] gameBoard)
     {
-        for (int x = 0; x < 5; x++)
+        Console.WriteLine("   0  1  2  3  4 ");
+        for (int y = 4; y >= 0; y--)
         {
-            for (int y = 0; y < 5; y++)
+            Console.Write($"{y}|");
+            for (int x = 0; x < 5; x++)
             {
-                Console.Write(gameBoard[x, y].hasBomb ? "B " : "O ");
+                Tile tile = gameBoard[x, y];
+                if (tile.isOpen)
+                {
+                    if (tile.hasBomb)
+                    {
+                        Console.Write(" * ");
+                    }
+                    else
+                    {
+                        Console.Write($" {tile.numberOfBombsAround} ");
+                    }
+                }
+                else
+                {
+                    Console.Write(" ? ");
+                }
             }
             Console.WriteLine();
         }
