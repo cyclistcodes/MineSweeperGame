@@ -64,3 +64,18 @@ class Minesweeper
     }
 }
 
+static bool isGameWon(Tile[,] gameBoard)
+{
+    for (int x = 0; x < 5; x++)
+    {
+        for (int y = 0; y < 5; y++)
+        {
+            Tile tile = gameBoard[x, y];
+            if (!tile.isOpen && !tile.hasBomb)
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
