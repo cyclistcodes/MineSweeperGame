@@ -44,7 +44,7 @@ class Minesweeper
         }
     }
 
-    static void DisplayGameBoard(Tile[,] gameBoard)
+    static void displayGameBoard(Tile[,] gameBoard)
     {
         Console.WriteLine("   0  1  2  3  4 ");
         for (int y = 4; y >= 0; y--)
@@ -77,7 +77,7 @@ class Minesweeper
     {
         Tile[,] gameBoard = createGameBoard();
         placeRandomBombs(gameBoard, 5); 
-        DisplayGameBoard(gameBoard); 
+        displayGameBoard(gameBoard); 
     }
 }
 
@@ -95,4 +95,38 @@ static bool isGameWon(Tile[,] gameBoard)
         }
     }
     return true;
+}
+
+static void openTile(Tile[,] gameBoard, int x, int y)
+{
+    Tile tile = gameBoard[x, y];
+    if (tile.isOpen)
+    {
+        return;
+    }
+    tile.isOpen = true;
+    if (tile.hasBomb)
+    {
+        Console.WriteLine("You lost!");
+        Console.ReadLine();
+        displayGameBoard(gameBoard);
+    }
+    else
+    {
+        tile.numberOfBombsAround = countBombsAroundTile(gameBoard, x, y);
+        if (tile.numberOfBombsAround == 0)
+        {
+            int[] dx = { -1, -1, -1, 0, 0, 1, 1, 1 };
+            int[] dy = { -1, 0, 1, -1, 1, -1, 0, 1 };
+            for (int i = 0; i < 8; i++)
+            {
+                int new_x = x + dx[i];
+                int new_y = y + dy[i];
+                if (new_x >= 0 && new_x < 5 && new_y >= 0 && new_y < 5)
+                {
+                    openTile(gameBoard, new_x, new_y);
+                }
+            }
+        }
+    }
 }
