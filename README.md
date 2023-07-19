@@ -2,6 +2,16 @@
 
 This is a simple command-line implementation of the Minesweeper game written in C#. The game is played on a 5x5 grid, where the player tries to uncover all tiles without hitting a bomb.
 
+## How to Run
+
+1. Make sure you have the .NET SDK installed on your system.
+
+2. Clone the project and utilize it in your preferred C# development environment (e.g., Visual Studio, Visual Studio Code).
+
+3. Build and run the project.
+
+4. Follow the on-screen instructions to play the Minesweeper game.
+
 ## How to Play
 
 1. When you run the application, a 5x5 grid will be displayed with all tiles hidden, represented by question marks ("?").
@@ -16,12 +26,4 @@ This is a simple command-line implementation of the Minesweeper game written in 
 
 6. Continue revealing tiles until all non-bomb tiles are opened. If successful, the board will be displayed, and the player wins the game.
 
-## How to Run
 
-1. Make sure you have the .NET SDK installed on your system.
-
-2. Copy and paste the provided code into a C# project in your preferred C# development environment (e.g., Visual Studio, Visual Studio Code).
-
-3. Build and run the project.
-
-4. Follow the on-screen instructions to play the Minesweeper game.
