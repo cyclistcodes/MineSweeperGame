@@ -10,6 +10,7 @@ class Tile
     public bool isOpen;
     public int numberOfBombsAround;
 }
+
 class Minesweeper
 {
     static Random random = new Random();
@@ -26,6 +27,7 @@ class Minesweeper
         }
         return gameBoard;
     }
+
     static void placeRandomBombs(Tile[,] gameBoard, int numberOfBombs)
     {
         int bombsPlaced = 0;
@@ -41,4 +43,24 @@ class Minesweeper
             }
         }
     }
+
+    static void DisplayGameBoard(Tile[,] gameBoard)
+    {
+        for (int x = 0; x < 5; x++)
+        {
+            for (int y = 0; y < 5; y++)
+            {
+                Console.Write(gameBoard[x, y].hasBomb ? "B " : "O ");
+            }
+            Console.WriteLine();
+        }
+    }
+
+    static void Main(string[] args)
+    {
+        Tile[,] gameBoard = createGameBoard();
+        placeRandomBombs(gameBoard, 5); 
+        DisplayGameBoard(gameBoard); 
+    }
 }
+
