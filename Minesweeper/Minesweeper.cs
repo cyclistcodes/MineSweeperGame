@@ -1,4 +1,6 @@
-﻿namespace Minesweeper;
+﻿using System;
+
+namespace Minesweeper;
 
 class Tile
 {
@@ -10,6 +12,7 @@ class Tile
 }
 class Minesweeper
 {
+    static Random random = new Random();
 
     static Tile[,] createGameBoard()
     {
@@ -22,5 +25,20 @@ class Minesweeper
             }
         }
         return gameBoard;
+    }
+    static void placeRandomBombs(Tile[,] gameBoard, int numberOfBombs)
+    {
+        int bombsPlaced = 0;
+        while (bombsPlaced < numberOfBombs)
+        {
+            int x = random.Next(0, 5);
+            int y = random.Next(0, 5);
+            Tile tile = gameBoard[x, y];
+            if (!tile.hasBomb)
+            {
+                tile.hasBomb = true;
+                bombsPlaced++;
+            }
+        }
     }
 }
