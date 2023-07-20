@@ -159,22 +159,6 @@ static bool areAllTilesOpened(Tile[,] gameBoard)
     return true;
 }
 
-static void printBombCoordinates(Tile[,] gameBoard)
-{
-    Console.WriteLine("Bomb Coordinates:");
-    for (int x = 0; x < 5; x++)
-    {
-        for (int y = 0; y < 5; y++)
-        {
-            if (gameBoard[x, y].hasBomb)
-            {
-                Console.WriteLine($"({x}, {y})");
-            }
-        }
-    }
-    Console.WriteLine();
-}
-
 static void Main(string[] args)
 {
     Tile[,] gameBoard = createGameBoard();
@@ -185,7 +169,6 @@ static void Main(string[] args)
     gameBoard[1, 4].hasBomb = true;
     gameBoard[4, 2].hasBomb = true;
 
-    printBombCoordinates(gameBoard);
 
     while (true)
     {
