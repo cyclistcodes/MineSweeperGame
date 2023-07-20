@@ -2,6 +2,7 @@
 
 namespace Minesweeper;
 
+//An individual tile on the game board
 class Tile
 {
     public int x;
@@ -11,6 +12,7 @@ class Tile
     public int numberOfBombsAround;
 }
 
+// The main class for the Minesweeper game.
 class Minesweeper
 {
     static Random random = new Random();
@@ -123,7 +125,8 @@ static void openTile(Tile[,] gameBoard, int x, int y)
     }
 }
 
-static int countBombsAroundTile(Tile[,] gameBoard, int x, int y)
+    // Checks if all non-bomb tiles are opened on the game board.
+    static int countBombsAroundTile(Tile[,] gameBoard, int x, int y)
 {
     int bombCount = 0;
     int[] dx = { -1, -1, -1, 0, 0, 1, 1, 1 };
