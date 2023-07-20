@@ -75,132 +75,129 @@ class Minesweeper
         }
     }
 
-static bool isGameWon(Tile[,] gameBoard)
-{
-    for (int x = 0; x < 5; x++)
+    static bool isGameWon(Tile[,] gameBoard)
     {
-        for (int y = 0; y < 5; y++)
+        for (int x = 0; x < 5; x++)
         {
-            Tile tile = gameBoard[x, y];
-            if (!tile.isOpen && !tile.hasBomb)
+            for (int y = 0; y < 5; y++)
             {
-                return false;
+                Tile tile = gameBoard[x, y];
+                if (!tile.isOpen && !tile.hasBomb)
+                {
+                    return false;
+                }
             }
         }
+        return true;
     }
-    return true;
-}
 
-static void openTile(Tile[,] gameBoard, int x, int y)
-{
-    Tile tile = gameBoard[x, y];
-    if (tile.isOpen)
+    static void openTile(Tile[,] gameBoard, int x, int y)
     {
-        return;
-    }
-    tile.isOpen = true;
-    if (tile.hasBomb)
-    {
-        Console.WriteLine("You lost!");
-        Console.ReadLine();
-        displayGameBoard(gameBoard);
-    }
-    else
-    {
-        tile.numberOfBombsAround = countBombsAroundTile(gameBoard, x, y);
-        if (tile.numberOfBombsAround == 0)
+        Tile tile = gameBoard[x, y];
+        if (tile.isOpen)
         {
-            int[] dx = { -1, -1, -1, 0, 0, 1, 1, 1 };
-            int[] dy = { -1, 0, 1, -1, 1, -1, 0, 1 };
-            for (int i = 0; i < 8; i++)
+            return;
+        }
+        tile.isOpen = true;
+        if (tile.hasBomb)
+        {
+            Console.WriteLine("You lost!");
+            Console.ReadLine();
+            displayGameBoard(gameBoard);
+        }
+        else
+        {
+            tile.numberOfBombsAround = countBombsAroundTile(gameBoard, x, y);
+            if (tile.numberOfBombsAround == 0)
             {
-                int new_x = x + dx[i];
-                int new_y = y + dy[i];
-                if (new_x >= 0 && new_x < 5 && new_y >= 0 && new_y < 5)
+                int[] dx = { -1, -1, -1, 0, 0, 1, 1, 1 };
+                int[] dy = { -1, 0, 1, -1, 1, -1, 0, 1 };
+                for (int i = 0; i < 8; i++)
                 {
-                    openTile(gameBoard, new_x, new_y);
+                    int new_x = x + dx[i];
+                    int new_y = y + dy[i];
+                    if (new_x >= 0 && new_x < 5 && new_y >= 0 && new_y < 5)
+                    {
+                        openTile(gameBoard, new_x, new_y);
+                    }
                 }
             }
         }
     }
-}
 
     // Checks if all non-bomb tiles are opened on the game board.
     static int countBombsAroundTile(Tile[,] gameBoard, int x, int y)
-{
-    int bombCount = 0;
-    int[] dx = { -1, -1, -1, 0, 0, 1, 1, 1 };
-    int[] dy = { -1, 0, 1, -1, 1, -1, 0, 1 };
-    for (int i = 0; i < 8; i++)
     {
-        int new_x = x + dx[i];
-        int new_y = y + dy[i];
-        if (new_x >= 0 && new_x < 5 && new_y >= 0 && new_y < 5 && gameBoard[new_x, new_y].hasBomb)
+        int bombCount = 0;
+        int[] dx = { -1, -1, -1, 0, 0, 1, 1, 1 };
+        int[] dy = { -1, 0, 1, -1, 1, -1, 0, 1 };
+        for (int i = 0; i < 8; i++)
         {
-            bombCount++;
-        }
-    }
-    return bombCount;
-}
-
-static bool areAllTilesOpened(Tile[,] gameBoard)
-{
-    for (int x = 0; x < 5; x++)
-    {
-        for (int y = 0; y < 5; y++)
-        {
-            Tile tile = gameBoard[x, y];
-            if (!tile.isOpen && !tile.hasBomb)
+            int new_x = x + dx[i];
+            int new_y = y + dy[i];
+            if (new_x >= 0 && new_x < 5 && new_y >= 0 && new_y < 5 && gameBoard[new_x, new_y].hasBomb)
             {
-                return false;
+                bombCount++;
             }
         }
+        return bombCount;
     }
-    return true;
-}
 
-static void Main(string[] args)
-{
-    Tile[,] gameBoard = createGameBoard();
-
-    gameBoard[0, 0].hasBomb = true;
-    gameBoard[0, 1].hasBomb = true;
-    gameBoard[1, 1].hasBomb = true;
-    gameBoard[1, 4].hasBomb = true;
-    gameBoard[4, 2].hasBomb = true;
-
-
-    while (true)
+    static bool areAllTilesOpened(Tile[,] gameBoard)
     {
-        displayGameBoard(gameBoard);
-        Console.Write("Enter coordinates (x y): ");
-        string input = Console.ReadLine();
-        string[] coordinates = input.Split(' ');
-
-        if (coordinates.Length == 2 && int.TryParse(coordinates[0], out int x) && int.TryParse(coordinates[1], out int y))
+        for (int x = 0; x < 5; x++)
         {
-            if (x >= 0 && x < 5 && y >= 0 && y < 5)
+            for (int y = 0; y < 5; y++)
             {
-                openTile(gameBoard, x, y);
-
-                if (areAllTilesOpened(gameBoard))
+                Tile tile = gameBoard[x, y];
+                if (!tile.isOpen && !tile.hasBomb)
                 {
-                    displayGameBoard(gameBoard);
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
-                    Console.WriteLine("Congratulations! You won!");
-                    Console.ReadLine();
-                    break;
+    static void Main(string[] args)
+    {
+        Tile[,] gameBoard = createGameBoard();
+
+        int numberOfBombs = 5;
+
+        placeRandomBombs(gameBoard, numberOfBombs);
+
+        while (true)
+        {
+            displayGameBoard(gameBoard);
+            Console.Write("Enter coordinates (x y): ");
+            string input = Console.ReadLine();
+            string[] coordinates = input.Split(' ');
+
+            if (coordinates.Length == 2 && int.TryParse(coordinates[0], out int x) && int.TryParse(coordinates[1], out int y))
+            {
+                if (x >= 0 && x < 5 && y >= 0 && y < 5)
+                {
+                    openTile(gameBoard, x, y);
+
+                    if (areAllTilesOpened(gameBoard))
+                    {
+                        displayGameBoard(gameBoard);
+
+                        Console.WriteLine("Congratulations! You won!");
+                        Console.ReadLine();
+                        break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid coordinates. Try again.");
                 }
             }
             else
             {
-                Console.WriteLine("Invalid coordinates. Try again.");
+                Console.WriteLine("Invalid input. Please enter two integers separated by a space.");
             }
         }
-        else
-        {
-            Console.WriteLine("Invalid input. Please enter two integers separated by a space.");
-        }
     }
-}
 }
