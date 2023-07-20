@@ -27,3 +27,10 @@ This is a simple command-line implementation of the Minesweeper game written in 
 6. Continue revealing tiles until all non-bomb tiles are opened. If successful, the board will be displayed, and the player wins the game.
 
 
+## Future improvements
+
+1. Custom Game Board: Allow users to create custom game boards with their own dimensions and number of bombs, providing greater flexibility and variety.
+
+2.  Difficulty Levels: Add options for different difficulty levels (easy, medium, hard), allowing players to choose the number of bombs and the size of the game board, providing more challenging gameplay.
+
+3. High Scores: Implement a high-score system to track and display the best performances of players. This could add a competitive element to the game and encourage replayability.
