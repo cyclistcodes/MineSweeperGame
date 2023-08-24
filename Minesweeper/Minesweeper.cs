@@ -1,5 +1,4 @@
 ﻿using System;
-
 namespace Minesweeper;
 
 //An individual tile on the game board
@@ -75,22 +74,6 @@ class Minesweeper
         }
     }
 
-    static bool isGameWon(Tile[,] gameBoard)
-    {
-        for (int x = 0; x < 5; x++)
-        {
-            for (int y = 0; y < 5; y++)
-            {
-                Tile tile = gameBoard[x, y];
-                if (!tile.isOpen && !tile.hasBomb)
-                {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     static void openTile(Tile[,] gameBoard, int x, int y)
     {
         Tile tile = gameBoard[x, y];
@@ -142,7 +125,6 @@ class Minesweeper
         }
         return bombCount;
     }
-
     static bool areAllTilesOpened(Tile[,] gameBoard)
     {
         for (int x = 0; x < 5; x++)
